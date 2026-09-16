@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>PA Pro Se Fathers Family Court Portal</title>
+    <style>
+        body { font-family: system-ui, -apple-system, sans-serif; background: #f1f5f9; margin: 0; padding: 20px; color: #0f172a; }
+        .header { max-width: 1300px; margin: 0 auto 20px auto; background: #1e293b; color: white; padding: 20px; border-radius: 8px; }
+        .header h1 { margin: 0 0 5px 0; font-size: 1.8rem; }
+        .header p { margin: 0; color: #94a3b8; font-size: 0.95rem; }
+        .main-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; max-width: 1300px; margin: auto; }
+        .panel { background: white; padding: 25px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        h2 { color: #1e3a8a; margin-top: 0; font-size: 1.3rem; }
+        .statute-box { background: #eff6ff; border-left: 4px solid #2563eb; padding: 12px 15px; border-radius: 4px; margin-bottom: 15px; font-size: 0.9rem; }
+        .statute-box strong { color: #1e40af; }
+        .search-bar { width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid #cbd5e1; border-radius: 6px; box-sizing: border-box; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th, td { text-align: left; padding: 10px; border-bottom: 1px solid #e2e8f0; font-size: 0.88rem; }
+        th { background-color: #f8fafc; font-weight: 600; color: #475569; position: sticky; top: 0; }
+        .table-container { max-height: 400px; overflow-y: auto; border: 1px solid #e2e8f0; border-radius: 6px; }
+        input[type="file"] { margin: 15px 0; display: block; }
+        button { background: #2563eb; color: white; border: none; padding: 11px 20px; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.95rem; }
+        button:hover { background: #1d4ed8; }
+        .action-box { background: #f0fdf4; border: 1px solid #bbf7d0; padding: 15px; border-radius: 6px; margin-top: 15px; }
+        .badge { font-size: 0.8em; background: #dbeafe; color: #1e40af; padding: 3px 8px; border-radius: 4px; font-weight: bold; }
+        .scanned-text-box { background: #f8fafc; border: 1px solid #e2e8f0; padding: 10px; border-radius: 4px; max-height: 100px; overflow-y: auto; font-size: 0.82em; font-family: monospace; }
+        .checklist { list-style: none; padding-left: 0; font-size: 0.9rem; }
+        .checklist li { margin-bottom: 8px; display: flex; align-items: flex-start; }
+        .checklist input { margin-right: 10px; margin-top: 3px; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>PA Family Court Portal — Pro Se Fathers Rights & Motions</h1>
+        <p>Statutory guides, evidence checklists, motion tables, and court order camera analysis under Title 23 Pa.C.S.</p>
+    </div>
+
+    <div class="main-layout">
+        <div class="panel">
+            <h2>Father's Rights & Statutory Protections (PA Law)</h2>
+            <div class="statute-box">
+                <strong>23 Pa.C.S. § 5328(b) — Gender Neutrality:</strong><br>
+                Pennsylvania law strictly prohibits court preference based on parent gender. Fathers have equal statutory rights to claim sole or shared legal and physical custody.
+            </div>
+            <div class="statute-box">
+                <strong>Pa.R.C.P. 1910.16-4 — Shared Custody Support Offset:</strong><br>
+                Fathers exercising 40% or more annual overnight custody (146+ nights) receive an automatic reduction in basic child support calculations.
+            </div>
+            <h2>Directory of Motions for Pro Se Fathers</h2>
+            <input type="text" id="search" class="search-bar" placeholder="Search custody, support, PFA, or contempt motions..." onkeyup="filterMotions()">
+            <div class="table-container">
+                <table id="toc-table">
+                    <thead>
+                        <tr>
+                            <th>Category</th>
+                            <th>Motion Title</th>
+                            <th>Statute / Rule</th>
+                        </tr>
+                    </thead>
+                    <tbody id="toc-body">
+                        <tr><td colspan="3">Loading directory...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="panel">
+            <h2>Scan Court Order / Notice (Father's Analysis)</h2>
+            <p style="font-size: 0.9rem; color: #475569;">Snap or upload a photo of your court document to extract key deadlines and father-specific defense steps:</p>
+            <input type="file" id="image-input" accept="image/*" capture="environment">
+            <button onclick="scanImage()">Analyze Court Order Photo</button>
+            <div id="loading" style="display:none; margin-top:10px; color:#2563eb;">Running OCR analysis... Please wait.</div>
+
+            <div id="analysis-results" style="display:none;" class="action-box">
+                <h3 id="res-doc-type" style="margin-top:0; color:#166534;">Document Detected</h3>
+                <p><strong>Governing Statute:</strong> <span id="res-statute" class="badge"></span></p>
+                <div id="res-protection" style="background:#dcfce7; padding:10px; border-radius:4px; font-size:0.88rem; margin-bottom:10px;"></div>
+                <h4>Recommended Actions for Father:</h4>
+                <ul id="res-actions" style="font-size:0.9rem; padding-left:20px;"></ul>
+                <h4>Extracted Text:</h4>
+                <div id="res-extracted" class="scanned-text-box"></div>
+            </div>
+
+            <hr style="margin: 25px 0; border: none; border-top: 1px solid #e2e8f0;">
+
+            <h2>Pro Se Father Court Evidence Checklist</h2>
+            <ul class="checklist">
+                <li><input type="checkbox"> <strong>Parenting Time Log:</strong> Calendar showing exact overnight custody days and missed visits.</li>
+                <li><input type="checkbox"> <strong>Communication Export:</strong> Printed text/app messages showing co-parenting outreach.</li>
+                <li><input type="checkbox"> <strong>Child Involvement Proof:</strong> School report cards, pediatrician visits, extra-curricular attendance logs.</li>
+                <li><input type="checkbox"> <strong>Financial Records:</strong> 6 months paystubs, tax returns, proof of health insurance and childcare payments.</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        let allMotions = [];
+
+        fetch('/api/table-of-contents')
+            .then(r => r.json())
+            .then(data => {
+                allMotions = data.motions;
+                renderMotions(allMotions);
+            });
+
+        function renderMotions(motions) {
+            const tbody = document.getElementById('toc-body');
+            tbody.innerHTML = '';
+            motions.forEach(m => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td><strong>${m.category}</strong></td>
+                    <td>${m.title}<br><small style="color:#64748b">${m.purpose}</small></td>
+                    <td><code>${m.rule_statute}</code></td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function filterMotions() {
+            const q = document.getElementById('search').value.toLowerCase();
+            const filtered = allMotions.filter(m => 
+                m.title.toLowerCase().includes(q) || 
+                m.category.toLowerCase().includes(q) || 
+                m.rule_statute.toLowerCase().includes(q) ||
+                m.purpose.toLowerCase().includes(q)
+            );
+            renderMotions(filtered);
+        }
+
+        function scanImage() {
+            const fileInput = document.getElementById('image-input');
+            if (!fileInput.files[0]) return alert('Please select or snap a court document photo first.');
+
+            const formData = new FormData();
+            formData.append('documentImage', fileInput.files[0]);
+
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('analysis-results').style.display = 'none';
+
+            fetch('/api/scan-image', {
+                method: 'POST',
+                body: formData
+            })
+            .then(r => r.json())
+            .then(data => {
+                document.getElementById('loading').style.display = 'none';
+                if(data.success) {
+                    document.getElementById('analysis-results').style.display = 'block';
+                    document.getElementById('res-doc-type').innerText = 'Detected: ' + data.analysis.detectedDocument;
+                    document.getElementById('res-statute').innerText = data.analysis.applicableStatute;
+                    document.getElementById('res-protection').innerText = data.analysis.fatherProtections || "Pro Se Rights Protected Under PA Rules of Civil Procedure.";
+                    document.getElementById('res-extracted').innerText = data.extractedText;
+
+                    const list = document.getElementById('res-actions');
+                    list.innerHTML = '';
+                    data.analysis.recommendedActions.forEach(act => {
+                        const li = document.createElement('li');
+                        li.innerText = act;
+                        list.appendChild(li);
+                    });
+                } else {
+                    alert('Error: ' + data.error);
+                }
+            })
+            .catch(err => {
+                document.getElementById('loading').style.display = 'none';
+                alert('Scan failed: ' + err.message);
+            });
+        }
+    </script>
+</body>
+</html>
