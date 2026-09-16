@@ -1,168 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PA Family Court Portal — Pro Se Fathers Rights</title>
-    <style>
-        * { box-sizing: border-box; }
-        body { font-family: system-ui, -apple-system, sans-serif; background: #f1f5f9; margin: 0; padding: 12px; color: #0f172a; }
-        .header { max-width: 1300px; margin: 0 auto 15px auto; background: #1e293b; color: white; padding: 16px; border-radius: 8px; }
-        .header h1 { margin: 0 0 5px 0; font-size: 1.4rem; }
-        .header p { margin: 0; color: #94a3b8; font-size: 0.85rem; }
-        .rights-banner { max-width: 1300px; margin: 0 auto 15px auto; background: #fef2f2; border: 1px solid #fca5a5; border-left: 5px solid #dc2626; padding: 12px 16px; border-radius: 6px; font-size: 0.85rem; color: #7f1d1d; }
-        .rights-banner strong { color: #991b1b; }
-        .main-layout { display: grid; grid-template-columns: 1fr; gap: 15px; max-width: 1300px; margin: auto; }
-        @media (min-width: 768px) { .main-layout { grid-template-columns: 1fr 1fr; } .header h1 { font-size: 1.8rem; } }
-        .panel { background: white; padding: 16px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
-        h2 { color: #1e3a8a; margin-top: 0; font-size: 1.15rem; }
-        .statute-box { background: #eff6ff; border-left: 4px solid #2563eb; padding: 10px 12px; border-radius: 4px; margin-bottom: 12px; font-size: 0.85rem; }
-        .statute-box strong { color: #1e40af; }
-        .search-bar { width: 100%; padding: 10px; margin-bottom: 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 0.9rem; }
-        table { width: 100%; border-collapse: collapse; margin-top: 5px; }
-        th, td { text-align: left; padding: 8px; border-bottom: 1px solid #e2e8f0; font-size: 0.82rem; }
-        th { background-color: #f8fafc; font-weight: 600; color: #475569; position: sticky; top: 0; }
-        .table-container { max-height: 350px; overflow-y: auto; border: 1px solid #e2e8f0; border-radius: 6px; }
-        input[type="file"] { margin: 12px 0; width: 100%; font-size: 0.85rem; }
-        button { background: #2563eb; color: white; border: none; padding: 12px 18px; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.9rem; width: 100%; }
-        button:hover { background: #1d4ed8; }
-        .action-box { background: #f0fdf4; border: 1px solid #bbf7d0; padding: 12px; border-radius: 6px; margin-top: 12px; }
-        .badge { font-size: 0.8em; background: #dbeafe; color: #1e40af; padding: 3px 6px; border-radius: 4px; font-weight: bold; }
-        .scanned-text-box { background: #f8fafc; border: 1px solid #e2e8f0; padding: 8px; border-radius: 4px; max-height: 100px; overflow-y: auto; font-size: 0.8em; font-family: monospace; }
-        .checklist { list-style: none; padding-left: 0; font-size: 0.85rem; }
-        .checklist li { margin-bottom: 8px; display: flex; align-items: flex-start; }
-        .checklist input { margin-right: 8px; margin-top: 2px; }
-        .footer-rights { max-width: 1300px; margin: 20px auto 0 auto; background: #0f172a; color: #94a3b8; padding: 16px; border-radius: 8px; font-size: 0.78rem; text-align: center; line-height: 1.5; }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PA Pro Se Family Law Portal</title>
+  <style>
+    :root { --primary: #1e3a8a; --bg: #f8fafc; --text: #0f172a; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 1rem; }
+    header { background: var(--primary); color: white; padding: 1rem; border-radius: 8px; text-align: center; }
+    .banner { background: #fef3c7; border-left: 4px solid #f59e0b; color: #92400e; padding: 0.75rem; margin: 1rem 0; border-radius: 4px; font-size: 0.875rem; }
+    .card { background: white; border: 1px solid #e2e8f0; padding: 1rem; border-radius: 8px; margin-bottom: 1rem; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+    input[type="text"] { width: 100%; padding: 0.75rem; border: 1px solid #cbd5e1; border-radius: 6px; box-sizing: border-box; }
+    button { background: var(--primary); color: white; border: none; padding: 0.75rem 1.25rem; border-radius: 6px; font-weight: bold; width: 100%; margin-top: 0.5rem; }
+  </style>
 </head>
 <body>
-    <div class="header">
-        <h1>PA Family Court Portal — Pro Se Fathers Rights</h1>
-        <p>Statutory guides, motion tables, and court order scanner under Title 23 Pa.C.S.</p>
-    </div>
-    <div class="rights-banner">
-        <strong>Notice of Explicit Reservation of Rights (Without Prejudice):</strong><br>
-        All statutory, constitutional, and parental rights reserved at all times pursuant to 1st & 14th Amendment Due Process and 23 Pa.C.S. § 5328(b). This application is published for self-represented (pro se) litigation assistance and non-commercial educational purposes.
-    </div>
-    <div class="main-layout">
-        <div class="panel">
-            <h2>Father's Rights & Statutory Protections</h2>
-            <div class="statute-box">
-                <strong>23 Pa.C.S. § 5328(b) — Mandatory Gender Neutrality:</strong><br>
-                Pennsylvania law strictly prohibits court preference based on parent gender.
-            </div>
-            <div class="statute-box">
-                <strong>Pa.R.C.P. 1910.16-4 — Shared Custody Support Offset:</strong><br>
-                Fathers exercising 40%+ overnights (146+ nights/year) receive automatic support reductions.
-            </div>
-            <h2>Directory of Motions</h2>
-            <input type="text" id="search" class="search-bar" placeholder="Search custody, support, PFA..." onkeyup="filterMotions()">
-            <div class="table-container">
-                <table id="toc-table">
-                    <thead>
-                        <tr>
-                            <th>Category</th>
-                            <th>Motion Title</th>
-                            <th>Rule</th>
-                        </tr>
-                    </thead>
-                    <tbody id="toc-body">
-                        <tr><td colspan="3">Loading...</td></tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <div class="panel">
-            <h2>Scan Court Order / Notice</h2>
-            <p style="font-size: 0.85rem; color: #475569;">Snap or upload a court document photo to analyze:</p>
-            <input type="file" id="image-input" accept="image/*" capture="environment">
-            <button onclick="scanImage()">Analyze Court Order</button>
-            <div id="loading" style="display:none; margin-top:10px; color:#2563eb; font-size:0.85rem;">Running OCR analysis...</div>
-            <div id="analysis-results" style="display:none;" class="action-box">
-                <h3 id="res-doc-type" style="margin-top:0; color:#166534; font-size:1rem;">Document Detected</h3>
-                <p style="font-size:0.85rem;"><strong>Statute:</strong> <span id="res-statute" class="badge"></span></p>
-                <div id="res-protection" style="background:#dcfce7; padding:8px; border-radius:4px; font-size:0.82rem; margin-bottom:8px;"></div>
-                <h4 style="font-size:0.9rem;">Recommended Actions:</h4>
-                <ul id="res-actions" style="font-size:0.82rem; padding-left:18px;"></ul>
-                <h4 style="font-size:0.9rem;">Extracted Text:</h4>
-                <div id="res-extracted" class="scanned-text-box"></div>
-            </div>
-            <hr style="margin: 20px 0; border: none; border-top: 1px solid #e2e8f0;">
-            <h2>Father Court Evidence Checklist</h2>
-            <ul class="checklist">
-                <li><input type="checkbox"> <strong>Parenting Time Log:</strong> Calendar showing overnight custody days.</li>
-                <li><input type="checkbox"> <strong>Communication Export:</strong> Text messages showing outreach.</li>
-                <li><input type="checkbox"> <strong>Child Involvement Proof:</strong> School report cards & medical logs.</li>
-                <li><input type="checkbox"> <strong>Financial Records:</strong> Paystubs and tax returns.</li>
-            </ul>
-        </div>
-    </div>
-    <div class="footer-rights">
-        &copy; 2026 Pro Se Father PA Law Portal. All Rights Reserved.<br>
-        <strong>Legal Disclaimer:</strong> Information provided on this portal does not constitute legal advice.
-    </div>
-    <script>
-        let allMotions = [];
-        fetch('/api/table-of-contents')
-            .then(r => r.json())
-            .then(data => {
-                allMotions = data.motions;
-                renderMotions(allMotions);
-            });
-        function renderMotions(motions) {
-            const tbody = document.getElementById('toc-body');
-            tbody.innerHTML = '';
-            motions.forEach(m => {
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td><strong>${m.category}</strong></td>
-                    <td>${m.title}<br><small style="color:#64748b">${m.purpose}</small></td>
-                    <td><code>${m.rule_statute}</code></td>
-                `;
-                tbody.appendChild(tr);
-            });
-        }
-        function filterMotions() {
-            const q = document.getElementById('search').value.toLowerCase();
-            const filtered = allMotions.filter(m => 
-                m.title.toLowerCase().includes(q) || 
-                m.category.toLowerCase().includes(q) || 
-                m.rule_statute.toLowerCase().includes(q) ||
-                m.purpose.toLowerCase().includes(q)
-            );
-            renderMotions(filtered);
-        }
-        function scanImage() {
-            const fileInput = document.getElementById('image-input');
-            if (!fileInput.files[0]) return alert('Select or snap a photo first.');
-            const formData = new FormData();
-            formData.append('documentImage', fileInput.files[0]);
-            document.getElementById('loading').style.display = 'block';
-            document.getElementById('analysis-results').style.display = 'none';
-            fetch('/api/scan-image', { method: 'POST', body: formData })
-            .then(r => r.json())
-            .then(data => {
-                document.getElementById('loading').style.display = 'none';
-                if(data.success) {
-                    document.getElementById('analysis-results').style.display = 'block';
-                    document.getElementById('res-doc-type').innerText = 'Detected: ' + data.analysis.detectedDocument;
-                    document.getElementById('res-statute').innerText = data.analysis.applicableStatute;
-                    document.getElementById('res-protection').innerText = data.analysis.fatherProtections || "Rights Protected Under PA Rules.";
-                    document.getElementById('res-extracted').innerText = data.extractedText;
-                    const list = document.getElementById('res-actions');
-                    list.innerHTML = '';
-                    data.analysis.recommendedActions.forEach(act => {
-                        const li = document.createElement('li');
-                        li.innerText = act;
-                        list.appendChild(li);
-                    });
-                } else { alert('Error: ' + data.error); }
-            })
-            .catch(err => {
-                document.getElementById('loading').style.display = 'none';
-                alert('Scan failed: ' + err.message);
-            });
-        }
-    </script>
+  <header>
+    <h1>PA Family Law Portal</h1>
+    <p>Title 23 Pa.C.S. Pro Se Resource</p>
+  </header>
+
+  <div class="banner">
+    <strong>Reservation of Rights & Disclaimer:</strong> This portal is for informational and educational purposes under PA Title 23. It does not constitute legal representation or advice.
+  </div>
+
+  <div class="card">
+    <h3>Search PA Family Motions</h3>
+    <input type="text" id="searchInput" placeholder="Search 52 PA court motions (e.g., Custody, Support)...">
+    <button onclick="searchMotions()">Search Database</button>
+    <div id="results" style="margin-top:1rem;"></div>
+  </div>
+
+  <script>
+    async function searchMotions() {
+      const query = document.getElementById('searchInput').value;
+      const res = await fetch(`/api/motions?q=${encodeURIComponent(query)}`);
+      const data = await res.json();
+      document.getElementById('results').innerHTML = data.map(m => `<div><strong>${m.title}</strong><p>${m.description}</p></div>`).join('');
+    }
+  </script>
 </body>
 </html>
