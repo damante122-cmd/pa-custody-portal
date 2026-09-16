@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
   },
   "keywords": [],
   "author": "",
@@ -14,9 +15,18 @@
     "body-parser": "^2.3.0",
     "cors": "^2.8.6",
     "express": "^5.2.1",
+    "localtunnel": "^2.0.2",
     "multer": "^2.4.0",
     "pdf-parse": "^2.4.5",
     "sqlite3": "^6.0.1",
     "tesseract.js": "^7.0.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/damante122-cmd/pa-family-law-app.git"
+  },
+  "bugs": {
+    "url": "https://github.com/damante122-cmd/pa-family-law-app/issues"
+  },
+  "homepage": "https://github.com/damante122-cmd/pa-family-law-app#readme"
 }
